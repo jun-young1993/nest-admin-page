@@ -1,11 +1,22 @@
 {
   "name": "nest-admin-page",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist/admin-page.module.js",
+    "dist/index.js",
+    "dist/ui/*"
+  ],
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "start:dev": "nest start --watch",
+    "start:dev-front": "cd ui && npm run start",
+    "build": "tsc && npm run build:front",
+    "build:back": "tsc",
+    "build:front": "cd ui && npm run build && cd .. && npm run move:front",
+    "move:front": "rm -rf dist/ui && mkdir -p dist/ui/build && cp -r ./ui/build ./dist/ui"
   },
   "author": "",
   "license": "ISC",

@@ -1,8 +1,8 @@
 // main.ts
 import { NestFactory } from '@nestjs/core';
-import { AdminPageModule } from './src/admin-page.module';
+import { AdminPageModule } from './admin-page.module';
 import { INestApplication } from '@nestjs/common';
-import {AppModule} from './src/app.module';
+import {AppModule} from './app.module';
 async function bootstrap() {
   const app: INestApplication = await NestFactory.create(AppModule);
 

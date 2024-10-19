@@ -1,1 +1,1 @@
-export * from './src/admin-page.module';
+export * from './admin-page.module';
