@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import Main from "./components/main";
+import { MainPage } from "./pages";
+import './global.css';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-root.render(
-  <React.StrictMode>
-      <Main />
-  </React.StrictMode>
+root.render(<MainPage></MainPage>
+  // <React.StrictMode>
+  //     <MainPage></MainPage>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
