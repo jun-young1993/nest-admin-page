@@ -5,16 +5,12 @@ import HeaderLayout from "./header.layout";
 const MainLayout = () => {
     return (
             <FlexContainer>
-                <SideBarLayout
-                    isOpen={true}
-                >
+                <SideBarLayout>
                     <FlexContainer
                         $width={"100%"}
                         $height={"100%"}
                     >
-                        <SideBarIconButton
-
-                        />
+                        <div>side bar</div>
                     </FlexContainer>
                     <div>Hi</div>
                 </SideBarLayout>
