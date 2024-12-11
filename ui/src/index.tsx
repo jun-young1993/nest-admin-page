@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import Main from "./views/main";
+import './css/global.css'
+import MainLayout from "./views/layout/main.layout";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-      <Main />
+      <MainLayout />
   </React.StrictMode>
 );
 

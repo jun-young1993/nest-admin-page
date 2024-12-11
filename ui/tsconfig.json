@@ -20,11 +20,11 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "baseUrl": "src",
-  "paths": {
-    "@/*": ["./*"]
-  },
+  "extends": "./tsconfig.paths.json",
   "include": [
     "src"
+, "tsconfig.paths.json"  ],
+  "exclude": [
+    "node_modules"
   ]
 }
