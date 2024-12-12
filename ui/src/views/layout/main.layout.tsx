@@ -3,16 +3,14 @@ import { useState } from "react";
 import { SideBarHeader } from "@shared"
 
 export default function MainLayout(){
-    const [ isOpenSideBarContainer, setIsOpenSideBarContainer ] = useState<boolean>(true)
+    const [ isOpenSideBarContainer, setIsOpenSideBarContainer ] = useState<boolean>(false)
     const sideBarContainerItems = [<ListItem><div>item1</div></ListItem>]
     return (
         <FlexContainer>
             <SideBarContainer
-                $header={
-                    <SideBarHeader 
-                        onClose={() => setIsOpenSideBarContainer(false)}
-                    />
-                }
+                $onMouseOut={() => setIsOpenSideBarContainer(false)}
+                $onMouseOver={() => setIsOpenSideBarContainer(true)}
+                $header={<SideBarHeader />}
                 $isOpen={isOpenSideBarContainer}
                 $items={sideBarContainerItems}
             >
