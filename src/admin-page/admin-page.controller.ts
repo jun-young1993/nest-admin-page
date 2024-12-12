@@ -1,4 +1,4 @@
-import { Controller, Get, OnModuleInit, Res } from "@nestjs/common";
+import { Controller, Get, OnModuleInit, Param, Req, Res } from "@nestjs/common";
 import { AdminPageOption } from "./options/admin-page-module.option";
 import * as express from 'express';
 import { join } from "path";
@@ -38,14 +38,26 @@ export class AdminPageController {
                 res.sendFile(filePath);
             }
 
+
+        }
+        return DynamicAdminPageController
+    }
+    static createStaticController(){
+        
+        @Controller('static')
+        class DynamicAdminPageStaticController {
+            public readonly buildPath: string;
+            constructor(){
+                this.buildPath = join(__dirname, 'ui');
+            }
             @Get('*')
-            serverStaticFiles(@Res() res: express.Response) {
+            serverStaticFiles(@Req() req: express.Request, @Res() res: express.Response) {
                 // 정적 파일 서빙
-                const staticFilePath = join(this.buildPath, 'index.html');
+                const staticFilePath = join(this.buildPath, req.path);
                 res.sendFile(staticFilePath);
             }
         }
-        return DynamicAdminPageController
+        return DynamicAdminPageStaticController
     }
     
 

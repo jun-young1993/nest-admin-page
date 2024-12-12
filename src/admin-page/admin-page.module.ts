@@ -21,10 +21,10 @@ export class AdminPageModule implements OnModuleInit{
     const dynamicController = AdminPageController.createController(
       options
     )
-    
+    const dynamicStaticController = AdminPageController.createStaticController()
     return {
       module: AdminPageModule,
-      controllers: [dynamicController],
+      controllers: [dynamicController,dynamicStaticController],
       providers: [
         {
           provide: AdminPageOption,
