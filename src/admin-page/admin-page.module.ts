@@ -1,30 +1,28 @@
-import { DynamicModule, INestApplication, Inject, Module, OnModuleInit } from '@nestjs/common';
-import * as express from 'express';
-import { join } from 'path';
+import { DynamicModule, Inject, Module, OnModuleInit } from '@nestjs/common';
 import { AdminPageController } from './admin-page.controller';
 import { AdminPageOption } from './options/admin-page-module.option';
-import { HttpAdapterHost } from '@nestjs/core';
+import { AdminPageApiModule } from '../admin-page-api/admin-page-api.module';
 
 @Module({})
 export class AdminPageModule implements OnModuleInit{
   constructor(
-    @Inject(AdminPageOption) private readonly options: AdminPageOption,
-    private readonly httpAdapterHost: HttpAdapterHost
-  ){
-    console.log(httpAdapterHost)
-  }
-  onModuleInit() {
-    console.log('on moule init', this.options.prifix, this.httpAdapterHost)
-  }
+    // @Inject(AdminPageOption) private readonly options: AdminPageOption,
+  ){}
+  
+  onModuleInit() {}
 
   static forRoot(options: AdminPageOption): DynamicModule {
-    const dynamicController = AdminPageController.createController(
+    const dynamicAdminPageController = AdminPageController.createController(
       options
     )
     
     return {
       module: AdminPageModule,
-      controllers: [dynamicController],
+      controllers: [dynamicAdminPageController],
+      imports: [
+        ...(options.typeorm ? [options.typeorm] : []),
+        AdminPageApiModule.forRoot(options)
+      ],
       providers: [
         {
           provide: AdminPageOption,

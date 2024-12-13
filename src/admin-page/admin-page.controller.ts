@@ -16,16 +16,7 @@ export class AdminPageController {
                 this.buildPath = join(__dirname, 'ui');
          
             }
-            onModuleInit() {
-                
-                
-
-                // 루트 경로에 정적 파일 서빙 설정
-                // expressApp.use(
-                //   '/static',
-                //   express.static(join(this.buildPath, 'static'))
-                // );
-            }
+            onModuleInit() {}
 
             @Get('')
             hello(){
