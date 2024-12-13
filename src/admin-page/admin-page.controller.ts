@@ -38,28 +38,36 @@ export class AdminPageController {
                 res.sendFile(filePath);
             }
 
-
+            @Get('/static/*')
+            serverStaticFiles(
+                @Req() req: express.Request,
+                @Res() res: express.Response
+            ) {
+                try {
+                    const originalPath = [...req.path.split('/').filter(Boolean)]
+                    originalPath.shift()
+                    // // 정적 파일 서빙
+                    const staticFilePath = join(this.buildPath, ...originalPath);
+                    res.sendFile(staticFilePath);
+                } catch( error ){
+                    res.status(500).send(error?.toString());
+                }
+            }
+            @Get(':fileName(.+\\.(json|png))$')
+            assetsFile(
+                @Param('fileName') fileName: string,
+                @Res() res: express.Response
+            ){
+                try {
+                    console.log(fileName)
+                    // // 정적 파일 서빙
+                    const staticFilePath = join(this.buildPath, fileName);
+                    res.sendFile(staticFilePath);
+                } catch( error ){
+                    res.status(500).send(error?.toString());
+                }
+            }
         }
         return DynamicAdminPageController
     }
-    static createStaticController(){
-        
-        @Controller('static')
-        class DynamicAdminPageStaticController {
-            public readonly buildPath: string;
-            constructor(){
-                this.buildPath = join(__dirname, 'ui');
-            }
-            @Get('*')
-            serverStaticFiles(@Req() req: express.Request, @Res() res: express.Response) {
-                // 정적 파일 서빙
-                const staticFilePath = join(this.buildPath, req.path);
-                res.sendFile(staticFilePath);
-            }
-        }
-        return DynamicAdminPageStaticController
-    }
-    
-
-    
 }
