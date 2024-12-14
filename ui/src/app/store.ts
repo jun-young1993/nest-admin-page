@@ -1,9 +1,9 @@
 // src/app/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import adminPageApiReducer from "../features/database/database-api.slice"
+import databaseApiReducer from "../features/database/database-api.slice"
 export const store = configureStore({
   reducer: {
-    adminPageApi: adminPageApiReducer,
+    databaseApi: databaseApiReducer,
   },
 });
 
