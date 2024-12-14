@@ -4,8 +4,8 @@
         "paths": {
             "@shared": ["./shared/index.ts"],
             "@shared/*": ["./shared/*"],
-            "@components": ["./components/index.ts"],
-            "@components/*": ["./components/*"]
+            "@constants": ["./constants/index.ts"],
+            "@constants/*": ["./constants/*"],
         },
     }
 }

@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import './css/global.css'
 import MainLayout from "./views/layout/main.layout";
+import { Provider } from "react-redux"
+import { store } from './app/store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-      <MainLayout />
+      <Provider store={store}>
+        <MainLayout />
+      </Provider>
   </React.StrictMode>
 );
 

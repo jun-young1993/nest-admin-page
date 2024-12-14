@@ -1,10 +1,17 @@
-import { FlexContainer, ListItem, SideBarContainer } from "juny-react-style";
-import { useState } from "react";
-import { SideBarHeader } from "@shared"
+import { FlexContainer, FullScreen, ListItem, SideBarContainer } from "juny-react-style";
+import { ReactNode, useState } from "react";
+import { SideBarHeader } from "@shared/side-bar";
+import MainComponentMapper from "./main-component-mapper";
 
 export default function MainLayout(){
     const [ isOpenSideBarContainer, setIsOpenSideBarContainer ] = useState<boolean>(false)
-    const sideBarContainerItems = [<ListItem><div>item1</div></ListItem>]
+    const [ view, setView ] = useState<ReactNode | null>(null)
+
+
+
+    const handleClickListItem = (view: ReactNode) => {
+        setView(view)
+    }
     return (
         <FlexContainer>
             <SideBarContainer
@@ -12,9 +19,21 @@ export default function MainLayout(){
                 $onMouseOver={() => setIsOpenSideBarContainer(true)}
                 $header={<SideBarHeader />}
                 $isOpen={isOpenSideBarContainer}
-                $items={sideBarContainerItems}
+                $items={[
+                    ...MainComponentMapper.map(({name, children}) => {
+                        return (
+                            <ListItem
+                                onClick={() => handleClickListItem(children)}
+                            >
+                                {name}
+                            </ListItem>
+                        )
+                    })
+                ]}
             >
-                <div>children</div>
+                <FullScreen>
+                    {view}
+                </FullScreen>
             </SideBarContainer>
         </FlexContainer>
     )
