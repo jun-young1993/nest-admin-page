@@ -1,14 +1,10 @@
 // src/features/adminPageApi/adminPageApiSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 import { RootState } from '../../app/store';
+import { DatabaseState } from './database.interface';
 
-interface DatabaseApiState {
-  data: string | null;
-  loading: boolean;
-  error: string | null;
-}
-
-const initialState: DatabaseApiState = {
+const initialState: DatabaseState = {
   data: null,
   loading: false,
   error: null,
@@ -28,7 +24,7 @@ export const fetchDatabaseApi = createAsyncThunk(
 
 // Slice 생성
 const databaseSlice = createSlice({
-  name: 'databaseApi',
+  name: 'database',
   initialState,
   reducers: {}, // 동기 액션은 여기에 추가 가능
   extraReducers: (builder) => {
@@ -48,6 +44,6 @@ const databaseSlice = createSlice({
   },
 });
 
-export const selectDatabaseApi = (state: RootState) => state.databaseApi;
+export const selectDatabase = (state: RootState) => state.database;
 
 export default databaseSlice.reducer;

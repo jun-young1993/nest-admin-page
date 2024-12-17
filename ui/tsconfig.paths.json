@@ -6,6 +6,12 @@
             "@shared/*": ["./shared/*"],
             "@constants": ["./constants/index.ts"],
             "@constants/*": ["./constants/*"],
+            "@app": ["./app/index.ts"],
+            "@app/*": ["./app/*"],
+            "@hooks": ["./hooks/index.ts"],
+            "@hooks/*": ["./hooks/*"],
+            "@features": ["./features/index.ts"],
+            "@features/*": ["./features/*"]
         },
     }
 }
