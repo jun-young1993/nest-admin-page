@@ -1,1 +1,1 @@
-export { default as DatabaseFeature } from "./database.feature"
+export { default as DatabaseFeature } from './database.feature';

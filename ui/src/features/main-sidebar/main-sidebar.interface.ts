@@ -1,9 +1,14 @@
 import { ReactNode } from 'react';
 
+export interface MainSidebarItemInterface {
+  key: string;
+  name: string;
+}
 export interface MainSidebarState {
-  data: string | null;
+  isOpen: boolean;
 }
 
 export interface MainSidebarProps {
   children: ReactNode;
+  items: MainSidebarItemInterface[];
 }

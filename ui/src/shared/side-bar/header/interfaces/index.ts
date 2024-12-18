@@ -1,1 +1,0 @@
-export type { SideBarProps } from './side-bar.interface'

@@ -3,14 +3,23 @@ import { RootState } from '@app/store';
 import { MainSidebarState } from './main-sidebar.interface';
 
 const initialState: MainSidebarState = {
-  data: null,
+  isOpen: false,
+  items: [],
 };
-
 export const mainSidebarSlice = createSlice({
   name: 'mainSidebar',
   initialState,
-  reducers: {},
+  reducers: {
+    open: (state) => {
+      state.isOpen = true;
+    },
+    close: (state) => {
+      state.isOpen = false;
+    },
+  },
 });
+
+export const mainSidebarActions = mainSidebarSlice.actions;
 
 export const selectMainSidebar = (state: RootState) => state.mainSidebar;
 
