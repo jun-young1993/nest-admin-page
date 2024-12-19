@@ -1,5 +1,7 @@
 import React from 'react';
+import { useToast } from 'juny-react-style';
 
+import ErrorBoundary from '@shared/error-boundary/error-boundary';
 interface FeatureComponentsProps {
   featureKey: string; // 동적으로 로드할 컴포넌트 키
 }
@@ -7,13 +9,20 @@ interface FeatureComponentsProps {
 const FeatureComponents: React.FC<FeatureComponentsProps> = ({
   featureKey,
 }) => {
-  // 동적으로 컴포넌트 로드
-  const DynamicComponent = React.lazy(() => import(`./${featureKey}`));
-
+  const { addToast } = useToast();
+  let DynamicComponent: React.LazyExoticComponent<React.FC> | null = null;
+  try {
+    DynamicComponent = React.lazy(() => import(`./${featureKey}`));
+  } catch (error) {
+    console.log('error',error)
+    addToast(error?.toString() || 'unknown');
+  }
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
-      <DynamicComponent />
-    </React.Suspense>
+    <ErrorBoundary>
+      <React.Suspense fallback={<div>Loading...</div>}>
+        {DynamicComponent && <DynamicComponent />}
+      </React.Suspense>
+    </ErrorBoundary>
   );
 };
 

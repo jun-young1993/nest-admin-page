@@ -4,7 +4,6 @@ import { MainSidebarState } from './main-sidebar.interface';
 
 const initialState: MainSidebarState = {
   isOpen: false,
-  items: [],
 };
 export const mainSidebarSlice = createSlice({
   name: 'mainSidebar',

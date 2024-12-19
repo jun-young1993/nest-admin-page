@@ -11,4 +11,5 @@ export interface MainSidebarState {
 export interface MainSidebarProps {
   children: ReactNode;
   items: MainSidebarItemInterface[];
+  onClickItem: (item: MainSidebarItemInterface) => void;
 }

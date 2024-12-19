@@ -1,19 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { ToastProvider } from 'juny-react-style';
+
+import { store } from '@app/store';
+
 import reportWebVitals from './reportWebVitals';
-import './css/global.css'
-import MainLayout from "./views/layout/main.layout";
-import { Provider } from "react-redux"
-import { store } from './app/store';
+import MainLayout from './views/layout/main/main.layout';
+
+import './css/global.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ToastProvider>
         <MainLayout />
-      </Provider>
+      </ToastProvider>
+    </Provider>
   </React.StrictMode>
 );
 

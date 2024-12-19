@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
+
 import { useAppDispatch, useAppSelector } from '@hooks';
+
 import { fetchDatabaseApi, selectDatabase } from './database.slice';
-import React, { useEffect } from 'react';
 
 const DatabaseFeature = () => {
   const dispatch = useAppDispatch();

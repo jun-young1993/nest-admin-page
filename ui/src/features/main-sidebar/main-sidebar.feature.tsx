@@ -1,36 +1,41 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { FullScreen, ListItem, SideBarContainer } from 'juny-react-style';
 
-import { useAppDispatch, useAppSelector } from '@hooks';
+import { useAppSelector } from '@hooks';
 
-import { selectMainSidebar, mainSidebarActions } from './main-sidebar.slice';
-import { MainSidebarProps } from './main-sidebar.interface';
+import { selectMainSidebar } from './main-sidebar.slice';
+import {
+  MainSidebarItemInterface,
+  MainSidebarProps,
+} from './main-sidebar.interface';
 
-const MainSidebarFeature = ({ children }: MainSidebarProps) => {
-  const dispatch = useAppDispatch();
-  const { open, close } = mainSidebarActions;
+const MainSidebarFeature = ({
+  children,
+  items,
+  onClickItem,
+}: MainSidebarProps) => {
   const selectIsOpen = createSelector(
     [selectMainSidebar],
     (mainSidebar) => mainSidebar.isOpen
   );
   const isOpen = useAppSelector(selectIsOpen);
-  const handleOpen = (setOpen: boolean) => dispatch(setOpen ? open() : close());
 
+  const handleClickListItem = (item: MainSidebarItemInterface) =>
+    onClickItem(item);
   return (
     <SideBarContainer
-      $onMouseOver={() => handleOpen(true)}
+      $height="100%"
       $header={
         <FullScreen>
-          <FullScreen $flex="0.3" $alignItems="center">
-            <span onClick={() => handleOpen(false)}>닫기 아이콘</span>
-          </FullScreen>
-          <FullScreen $flex="0.7" $alignItems="center">
-            Nest Admin Page(타이틀)
-          </FullScreen>
+          <FullScreen $alignItems="center">Nest Admin Page(타이틀)</FullScreen>
         </FullScreen>
       }
       $isOpen={isOpen}
-      $items={[<ListItem key="hi">hi</ListItem>]}
+      $items={items.map((item) => (
+        <ListItem key={item.key} onClick={() => handleClickListItem(item)}>
+          {item.name}
+        </ListItem>
+      ))}
     >
       <FullScreen>{children}</FullScreen>
     </SideBarContainer>

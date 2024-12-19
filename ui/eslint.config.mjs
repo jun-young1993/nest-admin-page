@@ -23,6 +23,11 @@ export default [
       'react/jsx-uses-react': 'off',
       'react/jsx-uses-vars': 'error',
       'react/prop-types': 'off',
+      'padding-line-between-statements': [
+        //함수 사이에 빈줄
+        'warn',
+        { blankLine: 'always', prev: 'function', next: 'function' },
+      ],
     },
   },
   {
