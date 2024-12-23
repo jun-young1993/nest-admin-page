@@ -14,7 +14,7 @@ const FeatureComponents: React.FC<FeatureComponentsProps> = ({
   try {
     DynamicComponent = React.lazy(() => import(`./${featureKey}`));
   } catch (error) {
-    console.log('error',error)
+    console.log('error', error);
     addToast(error?.toString() || 'unknown');
   }
   return (

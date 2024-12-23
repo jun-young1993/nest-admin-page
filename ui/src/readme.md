@@ -4,14 +4,15 @@ css
 코드 복사
 src/
 ├── app/
-│   └── store.ts
+│ └── store.ts
 ├── features/
-│   └── adminPageApi/
-│       ├── adminPageApiSlice.ts
-│       └── AdminPageApiFeature.tsx
+│ └── adminPageApi/
+│ ├── adminPageApiSlice.ts
+│ └── AdminPageApiFeature.tsx
 ├── index.tsx
+
 1. Redux Store 설정
-store.ts 파일에서 Redux 스토어를 설정합니다.
+   store.ts 파일에서 Redux 스토어를 설정합니다.
 
 typescript
 코드 복사
@@ -20,14 +21,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import adminPageApiReducer from '../features/adminPageApi/adminPageApiSlice';
 
 export const store = configureStore({
-  reducer: {
-    adminPageApi: adminPageApiReducer,
-  },
+reducer: {
+adminPageApi: adminPageApiReducer,
+},
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-2. Redux Slice 작성
+export type AppDispatch = typeof store.dispatch; 2. Redux Slice 작성
 adminPageApiSlice.ts에서 API 상태와 관련된 리듀서와 비동기 thunk를 정의합니다.
 
 typescript
@@ -37,55 +37,54 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
 interface AdminPageApiState {
-  data: string | null;
-  loading: boolean;
-  error: string | null;
+data: string | null;
+loading: boolean;
+error: string | null;
 }
 
 const initialState: AdminPageApiState = {
-  data: null,
-  loading: false,
-  error: null,
+data: null,
+loading: false,
+error: null,
 };
 
 // 비동기 thunk 정의
 export const fetchAdminPageApi = createAsyncThunk(
-  'adminPageApi/fetchAdminPageApi',
-  async () => {
-    const response = await fetch('http://localhost:3001/admin-page-api');
-    if (!response.ok) {
-      throw new Error('Failed to fetch API');
-    }
-    return response.text(); // 서버 응답을 텍스트로 반환
-  }
+'adminPageApi/fetchAdminPageApi',
+async () => {
+const response = await fetch('http://localhost:3001/admin-page-api');
+if (!response.ok) {
+throw new Error('Failed to fetch API');
+}
+return response.text(); // 서버 응답을 텍스트로 반환
+}
 );
 
 // Slice 생성
 const adminPageApiSlice = createSlice({
-  name: 'adminPageApi',
-  initialState,
-  reducers: {}, // 동기 액션은 여기에 추가 가능
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchAdminPageApi.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchAdminPageApi.fulfilled, (state, action) => {
-        state.loading = false;
-        state.data = action.payload;
-      })
-      .addCase(fetchAdminPageApi.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'Something went wrong';
-      });
-  },
+name: 'adminPageApi',
+initialState,
+reducers: {}, // 동기 액션은 여기에 추가 가능
+extraReducers: (builder) => {
+builder
+.addCase(fetchAdminPageApi.pending, (state) => {
+state.loading = true;
+state.error = null;
+})
+.addCase(fetchAdminPageApi.fulfilled, (state, action) => {
+state.loading = false;
+state.data = action.payload;
+})
+.addCase(fetchAdminPageApi.rejected, (state, action) => {
+state.loading = false;
+state.error = action.error.message || 'Something went wrong';
+});
+},
 });
 
 export const selectAdminPageApi = (state: RootState) => state.adminPageApi;
 
-export default adminPageApiSlice.reducer;
-3. React 컴포넌트 작성
+export default adminPageApiSlice.reducer; 3. React 컴포넌트 작성
 AdminPageApiFeature.tsx에서 Redux 상태와 API 호출을 연동합니다.
 
 tsx
@@ -96,25 +95,24 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetchAdminPageApi, selectAdminPageApi } from './adminPageApiSlice';
 
 const AdminPageApiFeature: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const { data, loading, error } = useAppSelector(selectAdminPageApi);
+const dispatch = useAppDispatch();
+const { data, loading, error } = useAppSelector(selectAdminPageApi);
 
-  useEffect(() => {
-    dispatch(fetchAdminPageApi());
-  }, [dispatch]);
+useEffect(() => {
+dispatch(fetchAdminPageApi());
+}, [dispatch]);
 
-  return (
-    <div>
-      <h1>Admin Page API - Feature Branch</h1>
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-      {data && <p>Response: {data}</p>}
-    </div>
-  );
+return (
+<div>
+<h1>Admin Page API - Feature Branch</h1>
+{loading && <p>Loading...</p>}
+{error && <p style={{ color: 'red' }}>Error: {error}</p>}
+{data && <p>Response: {data}</p>}
+</div>
+);
 };
 
-export default AdminPageApiFeature;
-4. Custom Hooks 정의
+export default AdminPageApiFeature; 4. Custom Hooks 정의
 useAppDispatch와 useAppSelector를 정의합니다.
 
 typescript
@@ -124,8 +122,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from './store';
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-5. Provider 설정
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector; 5. Provider 설정
 index.tsx에서 Provider를 설정합니다.
 
 tsx
@@ -140,11 +137,10 @@ import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
-);
-6. App Component 설정
+<Provider store={store}>
+<App />
+</Provider>
+); 6. App Component 설정
 App.tsx에서 AdminPageApiFeature 컴포넌트를 사용합니다.
 
 tsx
@@ -154,11 +150,11 @@ import React from 'react';
 import AdminPageApiFeature from './features/adminPageApi/AdminPageApiFeature';
 
 function App() {
-  return (
-    <div className="App">
-      <AdminPageApiFeature />
-    </div>
-  );
+return (
+<div className="App">
+<AdminPageApiFeature />
+</div>
+);
 }
 
 export default App;
@@ -170,12 +166,6 @@ createSlice와 createAsyncThunk로 API 상태를 간결하게 관리.
 Custom Hooks:
 useAppDispatch와 useAppSelector로 Redux 상태와 액션 간편하게 사용.
 이 구조는 확장성과 유지보수성이 뛰어나며, features 폴더를 기반으로 프로젝트를 깔끔하게 관리할 수 있습니다. 추가적인 질문이 있다면 말씀해주세요! 😊
-
-
-
-
-
-
 
 나의 말:
 thunk 가 뭐야/
@@ -200,8 +190,8 @@ Thunk는 **"액션 크리에이터가 반환하는 함수"**입니다.
 typescript
 코드 복사
 const setData = (data) => ({
-  type: 'SET_DATA',
-  payload: data,
+type: 'SET_DATA',
+payload: data,
 });
 Thunk 액션 (비동기 작업)
 Thunk는 함수 형태로 액션 크리에이터를 작성하며, 디스패치와 상태 접근이 가능합니다:
@@ -209,16 +199,17 @@ Thunk는 함수 형태로 액션 크리에이터를 작성하며, 디스패치�
 typescript
 코드 복사
 const fetchData = () => async (dispatch, getState) => {
-  dispatch({ type: 'FETCH_DATA_START' });
+dispatch({ type: 'FETCH_DATA_START' });
 
-  try {
-    const response = await fetch('https://api.example.com/data');
-    const data = await response.json();
+try {
+const response = await fetch('https://api.example.com/data');
+const data = await response.json();
 
     dispatch({ type: 'FETCH_DATA_SUCCESS', payload: data });
-  } catch (error) {
-    dispatch({ type: 'FETCH_DATA_FAILURE', payload: error.message });
-  }
+
+} catch (error) {
+dispatch({ type: 'FETCH_DATA_FAILURE', payload: error.message });
+}
 };
 Redux Thunk의 사용 방식
 Thunk 미들웨어 추가: Redux 스토어에 redux-thunk 미들웨어를 추가해야 합니다.
@@ -236,13 +227,13 @@ import { useDispatch } from 'react-redux';
 import { fetchData } from './actions';
 
 const Component = () => {
-  const dispatch = useDispatch();
+const dispatch = useDispatch();
 
-  const handleClick = () => {
-    dispatch(fetchData());
-  };
+const handleClick = () => {
+dispatch(fetchData());
+};
 
-  return <button onClick={handleClick}>Fetch Data</button>;
+return <button onClick={handleClick}>Fetch Data</button>;
 };
 Redux Toolkit에서의 Thunk
 Redux Toolkit에서는 createAsyncThunk라는 유틸리티를 제공하여 Thunk를 더 간단하게 작성할 수 있습니다.
@@ -253,29 +244,29 @@ typescript
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const fetchData = createAsyncThunk('data/fetchData', async () => {
-  const response = await fetch('https://api.example.com/data');
-  return await response.json();
+const response = await fetch('https://api.example.com/data');
+return await response.json();
 });
 
 const dataSlice = createSlice({
-  name: 'data',
-  initialState: { data: null, loading: false, error: null },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchData.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchData.fulfilled, (state, action) => {
-        state.loading = false;
-        state.data = action.payload;
-      })
-      .addCase(fetchData.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      });
-  },
+name: 'data',
+initialState: { data: null, loading: false, error: null },
+reducers: {},
+extraReducers: (builder) => {
+builder
+.addCase(fetchData.pending, (state) => {
+state.loading = true;
+state.error = null;
+})
+.addCase(fetchData.fulfilled, (state, action) => {
+state.loading = false;
+state.data = action.payload;
+})
+.addCase(fetchData.rejected, (state, action) => {
+state.loading = false;
+state.error = action.error.message;
+});
+},
 });
 
 export const dataReducer = dataSlice.reducer;
@@ -301,9 +292,3 @@ Thunk 함수 내부에 로직이 많아지면, 유지보수가 어려울 수 있
 
 Thunk보다 더 강력한 redux-saga 같은 미들웨어가 필요할 수 있음.
 Thunk는 Redux에서 비동기 로직을 처리하기 위한 간단하고 강력한 도구입니다. Redux Toolkit의 createAsyncThunk를 활용하면 훨씬 간결하게 비동기 작업을 처리할 수 있습니다. 추가 질문이 있다면 언제든 말씀해주세요! 😊
-
-
-
-
-
-

@@ -8,7 +8,7 @@ module.exports = {
       '@constants': path.resolve(__dirname, 'src/constants'),
       '@app': path.resolve(__dirname, 'src/app'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
-      "@features": path.resolve(__dirname, 'src/features')
-    }
-  }
+      '@features': path.resolve(__dirname, 'src/features'),
+    },
+  },
 };

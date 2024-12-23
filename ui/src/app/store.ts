@@ -1,12 +1,12 @@
 // src/app/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import databaseReducer from "@features/database/database.slice"
-import mainSidebarReducer from "@features/main-sidebar/main-sidebar.slice"
+import databaseReducer from '@features/database/database.slice';
+import mainSidebarReducer from '@features/main-sidebar/main-sidebar.slice';
 
 export const store = configureStore({
   reducer: {
     database: databaseReducer,
-    mainSidebar: mainSidebarReducer
+    mainSidebar: mainSidebarReducer,
   },
 });
 

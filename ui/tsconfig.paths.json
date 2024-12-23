@@ -1,17 +1,17 @@
 {
-    "compilerOptions": {
-        "baseUrl": "./src",
-        "paths": {
-            "@shared": ["./shared/index.ts"],
-            "@shared/*": ["./shared/*"],
-            "@constants": ["./constants/index.ts"],
-            "@constants/*": ["./constants/*"],
-            "@app": ["./app/index.ts"],
-            "@app/*": ["./app/*"],
-            "@hooks": ["./hooks/index.ts"],
-            "@hooks/*": ["./hooks/*"],
-            "@features": ["./features/index.ts"],
-            "@features/*": ["./features/*"]
-        },
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@shared": ["./shared/index.ts"],
+      "@shared/*": ["./shared/*"],
+      "@constants": ["./constants/index.ts"],
+      "@constants/*": ["./constants/*"],
+      "@app": ["./app/index.ts"],
+      "@app/*": ["./app/*"],
+      "@hooks": ["./hooks/index.ts"],
+      "@hooks/*": ["./hooks/*"],
+      "@features": ["./features/index.ts"],
+      "@features/*": ["./features/*"]
     }
+  }
 }

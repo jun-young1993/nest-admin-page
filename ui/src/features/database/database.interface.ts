@@ -1,6 +1,5 @@
 export interface DatabaseState {
-    data: string | null;
-    loading: boolean;
-    error: string | null;
-  }
-  
+  data: string | null;
+  loading: boolean;
+  error: string | null;
+}

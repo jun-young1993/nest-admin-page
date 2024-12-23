@@ -17,7 +17,7 @@ const MainHeader = () => {
   const handleOpen = () => dispatch(isOpen ? close() : open());
   return (
     <FullScreen>
-      <ToolTip $message="Open the sidebar" $position="bottom">
+      <ToolTip $message="Open the sidebar" $position="bottom-right">
         <OpenSideBarIconButton $size="xs" onClick={() => handleOpen()} />
       </ToolTip>
     </FullScreen>
