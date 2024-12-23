@@ -1,3 +1,8 @@
+프리티어 유닉스 기반
+npx prettier --write .
+
+
+
 Redux를 사용한 features 기반 설계
 폴더 구조
 css
@@ -103,6 +108,7 @@ dispatch(fetchAdminPageApi());
 }, [dispatch]);
 
 return (
+
 <div>
 <h1>Admin Page API - Feature Branch</h1>
 {loading && <p>Loading...</p>}
@@ -151,6 +157,7 @@ import AdminPageApiFeature from './features/adminPageApi/AdminPageApiFeature';
 
 function App() {
 return (
+
 <div className="App">
 <AdminPageApiFeature />
 </div>

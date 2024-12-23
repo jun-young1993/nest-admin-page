@@ -14,11 +14,13 @@ const initialState: DatabaseState = {
 export const fetchDatabaseApi = createAsyncThunk(
   'databaseApi/fetchDatabaseApi',
   async () => {
-    const response = await fetch('http://localhost:3001/admin-page-api');
+    const response = await fetch(
+      'http://localhost:3001/admin-page/typeorm/entity'
+    );
     if (!response.ok) {
       throw new Error('Failed to fetch API');
     }
-    return response.text(); // 서버 응답을 텍스트로 반환
+    return response.json();
   }
 );
 
