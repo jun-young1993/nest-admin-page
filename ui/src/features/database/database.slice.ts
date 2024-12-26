@@ -1,18 +1,31 @@
 // src/features/adminPageApi/adminPageApiSlice.ts
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '../../app/store';
-import { DatabaseState } from './database.interface';
+import { DatabaseState, DatabaseTableName } from './database.interface';
 
 const initialState: DatabaseState = {
-  data: null,
+  entites: [],
+  selectedTable: null,
   loading: false,
   error: null,
 };
 
-// 비동기 thunk 정의
-export const fetchDatabaseApi = createAsyncThunk(
-  'databaseApi/fetchDatabaseApi',
+export const fetchTableApi = createAsyncThunk(
+  'databaseApi/fetchTableApi',
+  async () => {
+    const response = await fetch(
+      'http://localhost:3001/admin-page/typeorm/table'
+    );
+    if (!response.ok) {
+      throw new Error('Failed to fetch API');
+    }
+    return response.json();
+  }
+);
+
+export const fetchEntityApi = createAsyncThunk(
+  'databaseApi/fetchEntityApi',
   async () => {
     const response = await fetch(
       'http://localhost:3001/admin-page/typeorm/entity'
@@ -28,23 +41,29 @@ export const fetchDatabaseApi = createAsyncThunk(
 const databaseSlice = createSlice({
   name: 'database',
   initialState,
-  reducers: {}, // 동기 액션은 여기에 추가 가능
+  reducers: {
+    setSelectedTable(state, action: PayloadAction<DatabaseTableName>) {
+      state.selectedTable = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchDatabaseApi.pending, (state) => {
+      .addCase(fetchEntityApi.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchDatabaseApi.fulfilled, (state, action) => {
+      .addCase(fetchEntityApi.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.entites = action.payload;
       })
-      .addCase(fetchDatabaseApi.rejected, (state, action) => {
+      .addCase(fetchEntityApi.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Something went wrong';
       });
   },
 });
+
+export const { setSelectedTable } = databaseSlice.actions;
 
 export const selectDatabase = (state: RootState) => state.database;
 

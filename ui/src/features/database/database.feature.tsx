@@ -3,22 +3,36 @@ import { FullScreen } from 'juny-react-style';
 
 import { useAppDispatch, useAppSelector } from '@hooks';
 
-import { fetchDatabaseApi, selectDatabase } from './database.slice';
+import {
+  fetchEntityApi,
+  selectDatabase,
+  setSelectedTable,
+} from './database.slice';
+import DatabaseEntityTable from './components/entity/database-entity-table';
 
 const DatabaseFeature = () => {
   const dispatch = useAppDispatch();
-  const { data, loading, error } = useAppSelector(selectDatabase);
-  console.log('data2', data);
+  const { entites, loading, selectedTable, error } =
+    useAppSelector(selectDatabase);
+
   useEffect(() => {
-    dispatch(fetchDatabaseApi());
-    console.log('data', data);
+    dispatch(fetchEntityApi());
   }, [dispatch]);
+
   return (
     <FullScreen>
-      {/* <Table $columns={columns} $data={tableData} /> */}
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: 'red' }}>Error: {JSON.stringify(error)}</p>}
-      {data && <p>Response: {JSON.stringify(data)}</p>}
+      <DatabaseEntityTable
+        tables={entites?.map((entity) => ({ name: entity.tableName }))}
+        column={entites
+          .find((entity) => entity.tableName == selectedTable)
+          ?.columns.map((column) => ({ key: column.name, label: column.name }))}
+        selectedTable={selectedTable}
+        onSelectetTable={({ name }) => {
+          dispatch(setSelectedTable(name));
+        }}
+      />
     </FullScreen>
   );
 };

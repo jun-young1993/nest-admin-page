@@ -1,10 +1,17 @@
-export interface DatabaseEntityColumn {
-  isNullable: boolean;
-  name: string;
-  default?: unknown;
+import { DatabaseTableName } from '@features/database/database.interface';
+import { TableColumn } from 'juny-react-style';
+
+
+export interface TableNameDropFieldItem {
+  name: DatabaseTableName;
 }
+
 export interface DatabaseEntityTableProps {
-  name: string;
-  tableName: string;
-  columns: DatabaseEntityColumn[];
+  tables: TableNameDropFieldItem[] | [];
+  onSelectetTable: (selectedTable: TableNameDropFieldItem) => void;
+  selectedTable: DatabaseTableName | null;
+  column?: TableColumn[];
+  // name: string;
+  // tableName: string;
+  // columns: DatabaseEntityColumn[];
 }
