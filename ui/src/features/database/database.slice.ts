@@ -6,6 +6,7 @@ import { DatabaseState, DatabaseTableName } from './database.interface';
 
 const initialState: DatabaseState = {
   entites: [],
+  record: [],
   selectedTable: null,
   loading: false,
   error: null,
@@ -37,6 +38,19 @@ export const fetchEntityApi = createAsyncThunk(
   }
 );
 
+export const feachRecordApi = createAsyncThunk(
+  'databaseApi/feachRecordApi',
+  async (table: string) => {
+    const response = await fetch(
+      `http://localhost:3001/admin-page/typeorm/record/${table}`
+    );
+    if (!response.ok) {
+      throw new Error('Failed to fetch API');
+    }
+    return response.json();
+  }
+);
+
 // Slice 생성
 const databaseSlice = createSlice({
   name: 'database',
@@ -57,6 +71,18 @@ const databaseSlice = createSlice({
         state.entites = action.payload;
       })
       .addCase(fetchEntityApi.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Something went wrong';
+      })
+      .addCase(feachRecordApi.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(feachRecordApi.fulfilled, (state, action) => {
+        state.loading = false;
+        state.record = action.payload;
+      })
+      .addCase(feachRecordApi.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Something went wrong';
       });

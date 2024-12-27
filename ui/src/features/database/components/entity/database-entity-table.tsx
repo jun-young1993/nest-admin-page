@@ -23,7 +23,7 @@ const DatabaseEntityTable = (props: DatabaseEntityTableProps) => {
         </DropDownField>
       </FullScreen>
       <FullScreen>
-        <Table $columns={props.column || []} $data={[]} />
+        <Table $columns={props.column} $data={props.data} />
       </FullScreen>
     </FullScreen>
   );

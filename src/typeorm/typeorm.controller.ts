@@ -1,4 +1,4 @@
-import { Controller, Inject, Get } from "@nestjs/common";
+import { Controller, Inject, Get, Param, BadRequestException } from "@nestjs/common";
 import { AdminPageOption } from "../admin-page/options/admin-page-module.option";
 import { DataSource } from "typeorm";
 
@@ -25,6 +25,7 @@ export class TypeormController {
                     name: meta.name,
                     tableName: meta.tableName,
                     columns: meta.columns.map((column) => ({
+                        isPrimary: column.isPrimary,
                         name: column.propertyName,
                         databaseType: column.type, // 실제 SQL 타입
                         isNullable: column.isNullable, // 컬럼이 NULL을 허용하는지
@@ -32,6 +33,19 @@ export class TypeormController {
                     })),
                 }));
                 return entities;
+            }
+
+            @Get('record/:table')
+            async getRecord(@Param('table') table: string){
+                try {
+                    const queryRunner = this.dataSource.createQueryRunner();
+                    await queryRunner.connect();
+                    const records = await queryRunner.query(`SELECT * FROM ${table}`);
+                    await queryRunner.release();
+                    return records;
+                  } catch (error) {
+                    throw new BadRequestException(`Error querying table ${table}: ${error?.toString()}`);
+                  }
             }
         }
 
